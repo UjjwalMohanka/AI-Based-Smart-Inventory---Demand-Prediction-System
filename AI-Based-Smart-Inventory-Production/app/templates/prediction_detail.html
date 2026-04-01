@@ -61,6 +61,14 @@
     </div>
 </div>
 
+<!-- Data passing to JS safely -->
+<script id="history-data" type="application/json">
+    {{ history|tojson|safe }}
+</script>
+<script id="predictions-data" type="application/json">
+    {{ predictions|tojson|safe }}
+</script>
+
 <!-- Chart.js Logic -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -69,9 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const ctx = chartElement.getContext('2d');
     
-    // Process data from Jinja2 to JS
-    const historyData = {{ history|tojson|safe }} || [];
-    const predictions = {{ predictions|tojson|safe }} || [];
+    // Process data from JSON script blocks
+    const historyData = JSON.parse(document.getElementById('history-data').textContent) || [];
+    const predictions = JSON.parse(document.getElementById('predictions-data').textContent) || [];
     
     // Sort and format history labels
     const historyLabels = historyData.map(item => `${item.month}/${item.year}`);
