@@ -1,0 +1,148 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --success-color: #4cc9f0;
+  --danger-color: #f72585;
+  --warning-color: #fb8500;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --sidebar-bg: #1e293b;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --font-family: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+h1, h2, h3, h4, .sidebar-header h3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background-color: var(--sidebar-bg);
+  color: #fff;
+  transition: all 0.3s;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar ul.components {
+  padding: 20px 0;
+}
+
+.sidebar ul li a {
+  padding: 12px 25px;
+  font-size: 1.1em;
+  display: block;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.sidebar ul li a:hover, .sidebar ul li.active > a {
+  color: #fff;
+  background: var(--primary-color);
+  border-left: 4px solid var(--success-color);
+}
+
+/* Main Content Styles */
+#content.with-sidebar {
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  padding: 0;
+  transition: all 0.3s;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-right: 16px;
+}
+
+.bg-primary-soft { background-color: #e0e7ff; color: var(--primary-color); }
+.bg-success-soft { background-color: #dcfce7; color: #15803d; }
+.bg-danger-soft { background-color: #fee2e2; color: #b91c1c; }
+.bg-warning-soft { background-color: #fef3c7; color: #b45309; }
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 16px;
+}
+
+.table tbody td {
+  padding: 16px;
+  vertical-align: middle;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.badge-low-stock {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Login/Register Page Specific */
+.auth-container {
+  max-width: 450px;
+  margin: 100px auto;
+  padding: 40px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}

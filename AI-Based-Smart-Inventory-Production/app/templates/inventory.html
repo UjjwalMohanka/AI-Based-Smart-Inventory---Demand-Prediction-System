@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-warehouse me-2 text-primary"></i>Inventory Management</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+        <i class="fas fa-plus me-2"></i>Add New Product
+    </button>
+</div>
+
+<!-- Inventory Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Stock Level</th>
+                        <th>Reorder Pt.</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>#{{ product.id }}</td>
+                        <td><strong>{{ product.name }}</strong></td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.inventory[0].quantity_in_stock if product.inventory else 0 }} {{ product.unit }}</td>
+                        <td>{{ product.reorder_point }}</td>
+                        <td>
+                            {% set stock = product.inventory[0].quantity_in_stock if product.inventory else 0 %}
+                            {% if stock <= product.reorder_point %}
+                            <span class="badge bg-danger">Low Stock</span>
+                            {% else %}
+                            <span class="badge bg-success">Optimal</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ url_for('inventory.predict', product_id=product.id) }}" class="btn btn-sm btn-outline-primary">Predict</a>
+                                <a href="{{ url_for('inventory.view_prediction', product_id=product.id) }}" class="btn btn-sm btn-outline-info">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">No products found. Add your first product to get started.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Add New Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('inventory.add_product') }}" method="POST">
+                <div class="modal-body pt-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Product Name</label>
+                        <input type="text" class="form-control" name="name" required placeholder="e.g. Steel Rods">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="Metal">Metal</option>
+                            <option value="Plastic">Plastic</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Hardware">Hardware</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Unit</label>
+                            <input type="text" class="form-control" name="unit" placeholder="kg, boxes, etc." required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Initial Stock</label>
+                            <input type="number" class="form-control" name="initial_stock" value="0" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Reorder Point (Min Stock)</label>
+                        <input type="number" class="form-control" name="reorder_point" value="100" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">Create Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
