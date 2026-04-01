@@ -1,5 +1,8 @@
 # AI-Based Smart Inventory & Demand Prediction System
 
+## Deployed Project
+[Deployed Project View](https://ai-based-smart-inventory-demand-6n39.onrender.com/)
+
 A production-ready full-stack web application that uses AI and machine learning to predict inventory demand, manage stock levels, and provide intelligent insights for procurement decisions.
 
 ![Tech Stack](https://img.shields.io/badge/React-18.2-blue)
