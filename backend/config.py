@@ -24,4 +24,9 @@ class Config:
     PORT = int(os.getenv('FLASK_PORT', 5000))
     
     # CORS
-    CORS_ORIGINS = ['http://localhost:5173', 'http://localhost:3000']
+    _cors_env = os.getenv('CORS_ORIGINS', '')
+    CORS_ORIGINS = (
+        [o.strip() for o in _cors_env.split(',') if o.strip()]
+        if _cors_env.strip()
+        else ['http://localhost:5173', 'http://localhost:3000']
+    )
