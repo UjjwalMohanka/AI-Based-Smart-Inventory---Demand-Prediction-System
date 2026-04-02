@@ -52,8 +52,8 @@
                 <hr class="my-4 text-muted opacity-25">
                 
                 <div class="d-grid">
-                    <button class="btn btn-warning fw-bold text-white shadow-sm py-2">
-                        <i class="fas fa-file-pdf me-2"></i>Export Forecast Report
+                    <button id="exportJsonBtn" class="btn btn-warning fw-bold text-white shadow-sm py-2">
+                        <i class="fas fa-file-code me-2"></i>Export Forecast JSON
                     </button>
                 </div>
             </div>
@@ -147,6 +147,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Parse and download JSON on click
+    const exportBtn = document.getElementById('exportJsonBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function() {
+            const exportData = {
+                product: "{{ product.name }}",
+                unit: "{{ product.unit }}",
+                historical_demand: historyData,
+                predicted_demand: predictions
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "forecast_{{ product.name|replace(' ', '_')|lower }}.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        });
+    }
 });
 </script>
 {% endblock %}
